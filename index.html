@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zara, Will You Be Mine?</title>
+  <style>
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      25% {
+        transform: scale(1.1);
+      }
+      50% {
+        transform: scale(0.95);
+      }
+      75% {
+        transform: scale(1.05);
+      }
+    }
+    @keyframes popupAppear {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0.9; }
+      100% { transform: translateY(-10vh) translateX(30px) rotate(360deg); opacity: 0; }
+    }
+
+    body {
+      font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+      background: linear-gradient(135deg, #ffe6ec 0%, #e1bee7 100%);
+      color: #333;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .floating-heart {
+      position: fixed;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: #e83e8c;
+      clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 80%, 20% 100%, 0% 35%);
+      opacity: 0.8;
+      animation-timing-function: linear;
+      animation-name: floatUp;
+      animation-duration: 8s;
+      animation-iteration-count: infinite;
+      animation-delay: 0s;
+      filter: drop-shadow(0 0 2px #e83e8c);
+      z-index: 0;
+    }
+    .floating-heart:nth-child(1) {
+      left: 15%;
+      animation-delay: 0s;
+      animation-duration: 8s;
+      width: 18px;
+      height: 18px;
+      opacity: 0.75;
+    }
+    .floating-heart:nth-child(2) {
+      left: 45%;
+      animation-delay: 2.5s;
+      animation-duration: 9s;
+      width: 25px;
+      height: 25px;
+      opacity: 0.85;
+    }
+    .floating-heart:nth-child(3) {
+      left: 70%;
+      animation-delay: 4s;
+      animation-duration: 7s;
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+    }
+
+    .container {
+      margin-top: 80px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 15px;
+      animation: fadeInUp 1s ease forwards;
+    }
+    header {
+      margin-bottom: 22px;
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.3s;
+      opacity: 0;
+    }
+    header h1 {
+      color: #e83e8c;
+      font-size: 2.8rem;
+      animation: heartbeat 2.5s ease-in-out infinite;
+      margin: 0;
+    }
+    nav {
+      margin: 15px 0;
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.6s;
+      opacity: 0;
+    }
+    nav a {
+      margin: 0 12px;
+      color: #e83e8c;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #7c43bd;
+    }
+    .subheading {
+      color: #7c43bd;
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.9s;
+      opacity: 0;
+    }
+    .section-content {
+      background: #fff5fccc;
+      padding: 25px 20px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      text-align: left;
+      box-shadow: 0 10px 30px rgba(232, 62, 140, 0.2);
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+    .section-content h2 {
+      color: #d81b60;
+      font-size: 1.8rem;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    .section-content p, .section-content ol {
+      font-size: 1.15rem;
+      line-height: 1.6;
+    }
+    .section-content ol {
+      padding-left: 1.4em;
+    }
+    .propose-btn {
+      background-color: #e83e8c;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.3rem;
+      padding: 15px 42px;
+      cursor: pointer;
+      margin: 30px 0;
+      box-shadow: 0 6px 15px #d81b6055;
+      display: block;
+      width: 100%;
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: transform 0.25s ease, background 0.3s ease;
+    }
+    .propose-btn:hover {
+      background: #c2255c;
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px #c2255c99;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 52%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border-radius: 25px;
+      padding: 40px 30px;
+      box-shadow: 0 12px 50px #ba92b8cc;
+      z-index: 99;
+      text-align: center;
+      max-width: 90vw;
+      animation: popupAppear 0.5s ease forwards;
+    }
+    .popup h2 {
+      margin-top: 0;
+      color: #d81b60;
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .popup p {
+      font-size: 1.2rem;
+      margin-bottom: 22px;
+    }
+    .close-btn {
+      background: #7c43bd;
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .close-btn:hover {
+      background: #5a2a86;
+    }
+    footer {
+      margin: 40px 0 0 10px;
+      color: #ab4baf;
+      font-size: 1rem;
+      font-style: italic;
+      opacity: 0.8;
+      animation: fadeInUp 1.2s ease forwards;
+      animation-delay: 2.5s;
+    }
+    @media (max-width: 600px) {
+      .container {
+        margin-top: 40px;
+        padding: 0 15px;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+      .section-content h2 {
+        font-size: 1.4rem;
+      }
+      .propose-btn {
+        font-size: 1.1rem;
+        max-width: 90%;
+        padding: 14px 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg_heart"></div>
+
+  <!-- Floating Hearts -->
+  <div class="floating-heart" style="left:15%; animation-delay:0s; animation-duration:8s;"></div>
+  <div class="floating-heart" style="left:45%; animation-delay:2.5s; animation-duration:9s; width: 25px; height: 25px;"></div>
+  <div class="floating-heart" style="left:70%; animation-delay:4s; animation-duration:7s;"></div>
+
+  <div class="container">
+    <header>
+      <h1>❤️ Zara, Will You Be Mine Forever? ❤️</h1>
+      <nav>
+        <a href="#home" id="navHome">Home</a>
+        <a href="#why" id="navWhy">Why I Love You</a>
+        <a href="#memories" id="navMemories"></a>        
+        <a href="#promise" id="navPromise">Promise to You</a>
+      </nav>
+      <p class="subheading">A special proposal from Sain Laskar</p>
+    </header>
+    
+    <section id="home" class="section-content home-section">
+      <button id="proposeBtn" class="propose-btn">Click to See My Proposal</button>
+      <div id="popup" class="popup">
+        <h2>💍 Zara, Do you Love me? 💍</h2>
+        <p>Let’s make a lifetime of memories together. I love you!</p>
+        <button class="close-btn">Close</button>
+      </div>
+    </section>
+    
+    <section id="why" class="section-content" style="display:none;">
+      <h2>10 Reasons I Love you Zara</h2>
+      <ol>
+        <li>Your smile brightens my darkest days.</li>
+        <li>You support and inspire me to be better.</li>
+        <li>Your laughter is my favorite music.</li>
+        <li>You make every ordinary day special.</li>
+        <li>Your kind heart makes the world better.</li>
+        <li>You accept me just as I am.</li>
+        <li>Your love is my strength.</li>
+        <li>We make the best memories together.</li>
+        <li>Your beauty, inside and out, is endless.</li>
+        <li>I just can’t imagine my life without you.</li>
+      </ol>
+      <p>Let's create many more reasons together!</p>
+    </section>
+
+    <section id="memories" class="section-content" style="display:none;">
+      <h2>Special Memories</h2>
+      <p>Remember our first walk in the park under the gentle rain, our endless talks till dawn, and every little moment that made my heart beat faster?</p>
+      <p>Every smile you gifted and every laugh we shared is a treasure I keep safely.</p>
+      <p>Those memories are the colors painting my world beautiful, Zara.</p>
+    </section>
+
+    <section id="promise" class="section-content" style="display:none;">
+      <h2>My Promise to You</h2>
+      <p>To always support your dreams and cherish your heart.</p>
+      <p>To hold your hand through every joy and challenge.</p>
+      <p>To love you not just today, but every moment of forever.</p>
+      <p>You and I, together, writing a beautiful story of love.</p>
+    </section>
+    
+
+  </div>
+  
+  <script>
+    // Show popup on button click
+    document.getElementById('proposeBtn').onclick = function () {
+      document.getElementById('popup').style.display = 'block';
+    };
+
+    // Close popup on close button click
+    document.querySelector('.close-btn').onclick = function () {
+      document.getElementById('popup').style.display = 'none';
+    };
+
+    // Navigation for multiple sections with fade animations
+    const sections = ['home', 'why', 'memories', 'promise'];
+    const fadeDuration = 300;
+
+    function fadeOut(element, callback) {
+      element.style.opacity = 1;
+      let opacity = 1;
+      const timer = setInterval(() => {
+        opacity -= 0.05;
+        if(opacity <= 0){
+          clearInterval(timer);
+          element.style.display = 'none';
+          if(callback) callback();
+        } else {
+          element.style.opacity = opacity;
+        }
+      }, fadeDuration / 20);
+    }
+    function fadeIn(element) {
+      element.style.opacity = 0;
+      element.style.display = 'block';
+      let opacity = 0;
+      const timer = setInterval(() => {
+        opacity += 0.05;
+        if(opacity >= 1){
+          clearInterval(timer);
+          element.style.opacity = 1;
+        } else {
+          element.style.opacity = opacity;
+        }
+      }, fadeDuration / 20);
+    }
+
+    function showSection(sectionID) {
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if(id === sectionID) {
+          fadeIn(el);
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    }
+
+    // Set nav event listeners
+    sections.forEach(id => {
+      document.getElementById('nav' + id.charAt(0).toUpperCase() + id.slice(1)).onclick = function (e) {
+        e.preventDefault();
+        showSection(id);
+      };
+    });
+
+    // Start with home section visible
+    showSection('home');
+  </script>
+</body>
+</html>
